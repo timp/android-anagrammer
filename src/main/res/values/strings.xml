@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="app_name">Anagrammer</string>
+	<string id="Title"        name="Title">Anagrammer</string>
+	<string id="AnagramHint"  name="AnagramHint">Anagram</string>
+</resources>
