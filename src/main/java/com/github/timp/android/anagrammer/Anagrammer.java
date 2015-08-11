@@ -74,7 +74,7 @@ public class Anagrammer extends Activity {
     protected void onPreExecute() {
       InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
       mgr.hideSoftInputFromWindow(inputBox.getWindowToken(), 0);
-      inputBox.setFocusable(false);
+      inputBox.setFocusableInTouchMode(false);
       table.setBackgroundColor(Color.LTGRAY);
       resultsCount.setText("Working...");
       output.setText("");
@@ -93,7 +93,7 @@ public class Anagrammer extends Activity {
 
     @Override
     protected void onPostExecute(ArrayList<String> anagrams) {
-      inputBox.setFocusable(true);
+      inputBox.setFocusableInTouchMode(true);
 
       inputBox.requestFocus();
       table.setBackgroundColor(Color.BLACK);
