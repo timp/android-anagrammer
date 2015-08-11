@@ -21,7 +21,7 @@
     </dependency>
     <dependency>
       <groupId>com.github.timp</groupId>
-      <artifactId>anagram</artifactId>
+      <artifactId>anagrammer</artifactId>
       <version>1.0</version>
     </dependency>
   </dependencies>
