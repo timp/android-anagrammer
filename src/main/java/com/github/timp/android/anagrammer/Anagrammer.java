@@ -93,8 +93,8 @@ public class Anagrammer extends Activity {
 
     @Override
     protected void onPostExecute(ArrayList<String> anagrams) {
+      inputBox.setText("");
       inputBox.setFocusableInTouchMode(true);
-
       inputBox.requestFocus();
       table.setBackgroundColor(Color.BLACK);
 
