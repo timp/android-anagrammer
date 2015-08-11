@@ -3,14 +3,9 @@
     android:id="@+id/Table"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:stretchColumns="0,1,2,3,4"
     android:fillViewport="true"
     android:layout_weight="1.0"
     xmlns:android="http://schemas.android.com/apk/res/android">
-    <TableRow
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
-    </TableRow>
     <TableRow >
         <TextView
                 android:id="@+id/fullscreen_content"
@@ -30,7 +25,9 @@
             android:layout_height="wrap_content"
             android:hint="@string/AnagramHint"
             android:inputType="text"
-            android:imeOptions="actionDone"/>
+            android:imeOptions="actionDone"
+            android:singleLine="true"
+            />
     </TableRow>
     <TableRow >
         <TextView

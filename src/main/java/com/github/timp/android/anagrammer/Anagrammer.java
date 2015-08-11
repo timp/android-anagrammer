@@ -1,10 +1,13 @@
 package com.github.timp.android.anagrammer;
 
 import android.app.Activity;
+import android.content.Context;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.method.ScrollingMovementMethod;
 import android.view.KeyEvent;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.*;
 
 import java.io.IOException;
@@ -23,6 +26,7 @@ public class Anagrammer extends Activity {
   EditText inputBox;
   TextView resultsCount;
   TextView output;
+  String input;
 
   @Override
   public void onCreate(Bundle savedInstanceState) {
@@ -54,27 +58,58 @@ public class Anagrammer extends Activity {
       public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
 
         EditText inputBox = (EditText) findViewById(R.id.anagramInput);
-        String input = inputBox.getText().toString();
 
-        //table.setBackgroundColor(Color.LTGRAY);
-        ArrayList<String> anagrams = null;
-        try {
-          anagrams = anagrammer.run(input.replace(" ", ""));
-        } catch (IOException e) {
-          throw new RuntimeException(e);
-        }
-        //table.setBackgroundColor(Color.BLACK);
-        String result = "";
-        for (String line : anagrams) {
-          result += line;
-          result += "\n";
-        }
+        input = inputBox.getText().toString();
+        new Doer().execute(new String[]{input});
 
-        resultsCount.setText(anagrams.size() + " for '" + input + "'");
-        output.setText(result);
         return true;
       }
 
     };
+  }
+
+  private class Doer extends AsyncTask<String, Void, ArrayList<String>> {
+
+    @Override
+    protected void onPreExecute() {
+      InputMethodManager mgr = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+      mgr.hideSoftInputFromWindow(inputBox.getWindowToken(), 0);
+      inputBox.setFocusable(false);
+      table.setBackgroundColor(Color.LTGRAY);
+      resultsCount.setText("Working...");
+      output.setText("");
+    }
+
+    @Override
+    protected ArrayList<String> doInBackground(String[] args) {
+      ArrayList<String> anagrams = null;
+      try {
+        anagrams = anagrammer.run(input.replace(" ", ""));
+      } catch (IOException e) {
+        throw new RuntimeException(e);
+      }
+      return anagrams;
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<String> anagrams) {
+      inputBox.setFocusable(true);
+
+      inputBox.requestFocus();
+      table.setBackgroundColor(Color.BLACK);
+
+      String result = "";
+      for (String line : anagrams) {
+        result += line;
+        result += "\n";
+      }
+
+      String numberOfAnagrams = ((Integer)anagrams.size()).toString();
+
+      resultsCount.setText(numberOfAnagrams + " for '" + input + "'");
+      output.setText(result);
+    }
+
+
   }
 }
