@@ -98,7 +98,7 @@ public class Anagrammer extends Activity {
       inputBox.requestFocus();
       table.setBackgroundColor(Color.BLACK);
 
-      String result = "";
+      String result = "\n";
       for (String line : anagrams) {
         result += line;
         result += "\n";
